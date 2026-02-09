@@ -2,7 +2,7 @@
 
 [English Documentation](README.md)
 
-一个强大的命令行工具，用于与 [RapidDNS API](https://rapiddns.io/api) 进行交互。该工具允许您直接从终端执行 DNS 搜索、高级查询和大规模数据导出。
+一个强大的命令行工具，用于与 [RapidDNS API](https://rapiddns.io/help/api) 进行交互。该工具允许您直接从终端执行 DNS 搜索、高级查询和大规模数据导出。
 
 ## 功能特性
 

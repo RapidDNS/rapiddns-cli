@@ -2,7 +2,7 @@
 
 [中文文档](README_zh.md)
 
-A powerful command-line interface for interacting with the [RapidDNS API](https://rapiddns.io/api). This tool allows you to perform DNS searches, advanced queries, and large-scale data exports directly from your terminal.
+A powerful command-line interface for interacting with the [RapidDNS API](https://rapiddns.io/help/api). This tool allows you to perform DNS searches, advanced queries, and large-scale data exports directly from your terminal.
 
 ## Features
 
