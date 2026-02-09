@@ -5,6 +5,11 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version tag (e.g., v1.0.0)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -31,6 +36,9 @@ jobs:
           set -euo pipefail
 
           VERSION="${GITHUB_REF_NAME}"
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          fi
           mkdir -p dist
 
           targets=(
@@ -71,6 +79,8 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.ref_name }}
+          target_commitish: ${{ github.sha }}
           files: |
             dist/*.tar.gz
             dist/*.zip
