@@ -8,13 +8,14 @@ import (
 	"net"
 	"os"
 	"path/filepath"
-	"rapiddns-cli/internal/api"
-	"rapiddns-cli/internal/config"
 	"regexp"
 	"sort"
 	"strings"
 
 	"github.com/spf13/cobra"
+
+	"github.com/rapiddns/rapiddns-cli/internal/api"
+	"github.com/rapiddns/rapiddns-cli/internal/config"
 )
 
 var (

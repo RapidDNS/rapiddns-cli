@@ -3,10 +3,11 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"rapiddns-cli/internal/config"
 	"strconv"
 
 	"github.com/go-resty/resty/v2"
+
+	"github.com/rapiddns/rapiddns-cli/internal/config"
 )
 
 const (

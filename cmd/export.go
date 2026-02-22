@@ -8,12 +8,13 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"rapiddns-cli/internal/api"
-	"rapiddns-cli/internal/config"
 	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
+
+	"github.com/rapiddns/rapiddns-cli/internal/api"
+	"github.com/rapiddns/rapiddns-cli/internal/config"
 )
 
 var (

@@ -1,6 +1,6 @@
 package main
 
-import "rapiddns-cli/cmd"
+import "github.com/rapiddns/rapiddns-cli/cmd"
 
 func main() {
 	cmd.Execute()

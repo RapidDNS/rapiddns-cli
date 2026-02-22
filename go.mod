@@ -1,4 +1,4 @@
-module rapiddns-cli
+module github.com/rapiddns/rapiddns-cli
 
 go 1.24.0
 

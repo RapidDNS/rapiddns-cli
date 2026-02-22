@@ -19,6 +19,22 @@
 
 ## 安装指南
 
+### 通过 `go install` 安装
+
+环境要求：Go 1.16+
+
+推荐使用 Go 官方方式一键安装最新版本：
+
+```bash
+go install github.com/rapiddns/rapiddns-cli@latest
+```
+
+安装完成后，请确认 `$GOPATH/bin`（或当前 Go 环境的可执行文件目录）已经加入 `PATH`，即可直接运行：
+
+```bash
+rapiddns-cli --help
+```
+
 ### 源码编译
 
 环境要求：Go 1.16+

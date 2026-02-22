@@ -3,10 +3,11 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"rapiddns-cli/internal/api"
-	"rapiddns-cli/internal/config"
 
 	"github.com/spf13/cobra"
+
+	"github.com/rapiddns/rapiddns-cli/internal/api"
+	"github.com/rapiddns/rapiddns-cli/internal/config"
 )
 
 var (

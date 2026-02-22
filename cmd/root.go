@@ -3,13 +3,14 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"rapiddns-cli/internal/config"
 
 	"github.com/spf13/cobra"
+
+	"github.com/rapiddns/rapiddns-cli/internal/config"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "rapiddns",
+	Use:   "rapiddns-cli",
 	Short: "RapidDNS CLI - A command line interface for RapidDNS API",
 	Long: `RapidDNS CLI allows you to query DNS data, search domains, IPs, and export results
 directly from your terminal using the RapidDNS API.`,

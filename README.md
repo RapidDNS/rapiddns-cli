@@ -7,7 +7,7 @@ A powerful command-line interface for interacting with the [RapidDNS API](https:
 ## Features
 
 *   **DNS Search**: Search by domain, IP, or CIDR.
-*   **Advanced Query**: Use powerful query syntax (e.g., `domain:example.com AND type:A`).
+*   **Advanced Query**: Use powerful query syntax (e.g., `domain:example ADN tld:com AND type:A`).
 *   **Data Export**: Automatically manage export tasks: start, poll status, download, and decompress.
 *   **Data Extraction**:
     *   Extract and deduplicate **Subdomains** to a list.
@@ -18,6 +18,22 @@ A powerful command-line interface for interacting with the [RapidDNS API](https:
 *   **Configuration**: Easy API key management.
 
 ## Installation
+
+### Via `go install`
+
+Requirements: Go 1.16+
+
+You can install the latest version directly with:
+
+```bash
+go install github.com/rapiddns/rapiddns-cli@latest
+```
+
+After installation, make sure that `$GOPATH/bin` (or Go's bin directory for your setup) is in your `PATH`, then you can invoke:
+
+```bash
+rapiddns-cli --help
+```
 
 ### Build from Source
 
