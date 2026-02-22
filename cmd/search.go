@@ -54,66 +54,65 @@ var searchCmd = &cobra.Command{
 		}
 			
 		allRecords := []api.Record{}
-		currentPage := searchPage // Start from specified page
-			
+		currentPage := searchPage
+
 		for {
-			_, pageData, pageErr := client.Search(keyword, currentPage, searchPageSize, searchType)
-				if pageErr != nil {
-					// If it's the first page and fails, return error
-					if len(allRecords) == 0 {
-						err = pageErr
-					} else {
-						// If subsequent page fails, just stop and use what we have
-						fmt.Fprintf(os.Stderr, "Warning: Stopped fetching at page %d due to error: %v\n", currentPage, pageErr)
-					}
-					break
-				}
+			var pageData *api.SearchData
+			var pageErr error
 
-				// Extract records from this page
-				var pageRecords []api.Record
-				if len(pageData.Data) > 0 {
-					pageRecords = pageData.Data
-				} else if len(pageData.Result) > 0 {
-					pageRecords = pageData.Result
-				}
-
-				if len(pageRecords) == 0 {
-					break // No more data
-				}
-
-				allRecords = append(allRecords, pageRecords...)
-				
-				if !searchSilent {
-					fmt.Fprintf(os.Stderr, "\rFetched %d records...", len(allRecords))
-				}
-
-				// Check limits
-				if len(allRecords) >= searchMax {
-					// Trim excess
-					allRecords = allRecords[:searchMax]
-					break
-				}
-
-				// Check if this was the last page (less than pageSize returned)
-				// Note: API might return exact pageSize on last page, so this is an approximation.
-				// Reliable way is checking total if available, or just keep fetching until empty.
-				// But empty check is done above.
-				if len(pageRecords) < searchPageSize {
-					break
-				}
-
-				currentPage++
+			if strings.ToLower(searchType) == "advanced" {
+				_, pageData, pageErr = client.AdvancedQuery(keyword, currentPage, searchPageSize)
+			} else {
+				_, pageData, pageErr = client.Search(keyword, currentPage, searchPageSize, searchType)
 			}
+
+			if pageErr != nil {
+				if len(allRecords) == 0 {
+					err = pageErr
+				} else {
+					fmt.Fprintf(os.Stderr, "Warning: Stopped fetching at page %d due to error: %v\n", currentPage, pageErr)
+				}
+				break
+			}
+
+			var pageRecords []api.Record
+			if len(pageData.Data) > 0 {
+				pageRecords = pageData.Data
+			} else if len(pageData.Result) > 0 {
+				pageRecords = pageData.Result
+			}
+
+			if len(pageRecords) == 0 {
+				break
+			}
+
+			allRecords = append(allRecords, pageRecords...)
+
 			if !searchSilent {
-				fmt.Fprintf(os.Stderr, "\nDone.\n")
+				fmt.Fprintf(os.Stderr, "\rFetched %d records...", len(allRecords))
 			}
 
-			// Construct combined data
-			data = &api.SearchData{
-				Data:   allRecords,
-				Status: "ok",
-				Total:  len(allRecords),
+			if len(allRecords) >= searchMax {
+				allRecords = allRecords[:searchMax]
+				break
 			}
+
+			if len(pageRecords) < searchPageSize {
+				break
+			}
+
+			currentPage++
+		}
+
+		if !searchSilent {
+			fmt.Fprintf(os.Stderr, "\nDone.\n")
+		}
+
+		data = &api.SearchData{
+			Data:   allRecords,
+			Status: "ok",
+			Total:  len(allRecords),
+		}
 
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error searching: %v\n", err)
@@ -190,7 +189,7 @@ func init() {
 	rootCmd.AddCommand(searchCmd)
 	searchCmd.Flags().IntVar(&searchPage, "page", 1, "Page index to fetch")
 	searchCmd.Flags().IntVar(&searchPageSize, "pagesize", 100, "Page size per request")
-	searchCmd.Flags().StringVar(&searchType, "type", "", "Force search type: subdomain, same_domain, ip, ip_segment")
+	searchCmd.Flags().StringVar(&searchType, "type", "", "Force search type: subdomain, same_domain, ip, ip_segment, advanced")
 	searchCmd.Flags().StringVarP(&searchOutput, "output", "o", "json", "Output format: json, csv, text")
 	searchCmd.Flags().BoolVar(&searchExtract, "extract-subdomains", false, "Extract and dedup subdomains to file")
 	searchCmd.Flags().BoolVar(&searchExtractIPs, "extract-ips", false, "Extract and dedup IPs to file with subnet stats")

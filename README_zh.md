@@ -97,7 +97,7 @@ rapiddns-cli search tesla.com
 
 **选项参数：**
 *   `--page`: 页码 (默认为 1)。
-*   `--type`: 过滤类型 (`subdomain`, `same_domain`, `ip`, `ip_segment`)。
+*   `--type`: 过滤类型 (`subdomain`, `same_domain`, `ip`, `ip_segment`, `advanced`)。
 *   `-o, --output`: 输出格式 (`json`, `csv`, `text`)。默认值：`json`。
 *   `-f, --file`: 将输出保存到指定文件。
 *   `--column`: 仅输出指定列到控制台 (`subdomain`, `ip`, `value`, `type`)。
@@ -157,10 +157,10 @@ rapiddns-cli search tesla.com --extract-subdomains --silent
 
 ### 3. 高级查询 (Advanced Query)
 
-使用 RapidDNS 语法执行复杂查询。
+使用 RapidDNS 语法，通过 `search` 命令配合 `--type advanced` 执行复杂查询。
 
 ```bash
-rapiddns-cli query "domain:apple.com AND type:A"
+rapiddns-cli search "domain:apple.com AND type:A" --type advanced
 ```
 
 ### 4. 数据导出 (Export) - 推荐用于大数据量
@@ -172,6 +172,7 @@ rapiddns-cli export start tesla.com
 ```
 
 **选项参数：**
+*   `--type`: 搜索类型 (`subdomain`, `sameip`, `ip_segment`, `advanced`)，其中 `advanced` 表示使用高级查询语法。
 *   `--max`: 导出的最大记录数 (0 表示全部, 默认为 0)。
 *   `--compress`: 将结果压缩为 ZIP (默认 `true`)。
 *   `--extract-subdomains`: 从下载的 CSV 中提取子域名。
@@ -191,6 +192,16 @@ rapiddns-cli export start tesla.com --max 10000 --extract-subdomains --extract-i
 5.  生成 `tesla.com_subdomains.txt` (子域名列表)。
 6.  生成 `tesla.com_ips.txt` (唯一 IP 列表)。
 7.  生成 `tesla.com_ip_stats.txt` (IP 子网统计)。
+
+**高级导出示例 (Advanced Export Example)：**
+
+如果希望在导出时使用高级查询语法，可以将 `--type` 设置为 `advanced`：
+
+```bash
+rapiddns-cli export start "domain:apple AND type:A" --type advanced
+```
+
+其中 `"domain:apple AND type:A"` 与在 `search --type advanced` 中使用的查询语法保持一致。
 
 ## 输出目录结构
 

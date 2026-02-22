@@ -97,7 +97,7 @@ rapiddns-cli search tesla.com
 
 **Options:**
 *   `--page`: Page number (default 1).
-*   `--type`: Filter by type (`subdomain`, `same_domain`, `ip`, `ip_segment`).
+*   `--type`: Filter by type (`subdomain`, `same_domain`, `ip`, `ip_segment`, `advanced`).
 *   `-o, --output`: Output format (`json`, `csv`, `text`). Default: `json`.
 *   `-f, --file`: Save output to a specific file.
 *   `--column`: Output only a specific column to console (`subdomain`, `ip`, `value`, `type`).
@@ -157,10 +157,10 @@ rapiddns-cli search tesla.com --extract-subdomains --silent
 
 ### 3. Advanced Query
 
-Perform complex queries using RapidDNS syntax.
+Perform complex queries using RapidDNS syntax with the `search` command and `--type advanced`.
 
 ```bash
-rapiddns-cli query "domain:apple.com AND type:A"
+rapiddns-cli search "domain:apple.com AND type:A" --type advanced
 ```
 
 ### 4. Data Export (Recommended for Large Data)
